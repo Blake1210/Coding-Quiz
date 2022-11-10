@@ -45,3 +45,41 @@ function nextQuestion() {
         choicesEl.appendChild(choiceNode);
     }
 }
+
+function answeringQuestion(event) {
+    var buttonEl = event.target
+
+    if (!buttonEl.matches('choice')) {
+        return;
+    }
+
+    if (buttonEl.value === questions[currentQuestionIndex].answer) {
+        feedBackEl.textContent = 'Correct!';
+    }
+
+    else {
+
+        time -= 15;
+
+        if (time < 0) {
+            time = 0;
+        }
+
+        timerEl.textContent = time
+
+        feedBackEl.textContent = 'Wrong!';
+    }
+
+    feedBackEl.setAttribute('class', 'feedback');
+    setTimeout(function () {
+        feedBackEl.setAttribute('class', 'feedback hide');
+    }, 1000);
+
+    currentQuestionIndex++;
+
+    if (time <= 0 || currentQuestionIndex === questions.length) {
+        quizEnd();
+    } else {
+        getQuestion();
+    }
+}
