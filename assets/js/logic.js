@@ -83,3 +83,58 @@ function answeringQuestion(event) {
         getQuestion();
     }
 }
+
+function endQuiz() {
+    clearInterval(timerId);
+
+    var endScreen = document.getElementById('end-screen');
+    endScreen.removeAttribute('class');
+
+    var finalScore = document.getElementById('final-score');
+    finalScore.textContent = time;
+
+    questionsEl.setAttribute('class', 'hide');
+    
+}
+
+function timer() {
+    time--;
+    timerEl.textContent = time;
+
+    if (time <= 0) {
+        quizEnd();
+    }
+}
+
+function saveHighscore() {
+    var initials = initialsEl.value.trim();
+
+    if (initials !== '') {
+        var highscores =
+        JSON.parse(window.localStorage.getItem('highscores')) || [];
+
+        var newHighscore = {
+            score: time,
+            initials: initials,
+        };
+
+        highscores.push(newHighscore);
+        window.localStorage.setItem('highscores', JSON.stringify(highscores));
+
+        window.location.href = 'highscoures.html';
+    }
+}
+
+function enterScore(event) {
+    if (event.key === 'Enter') {
+        saveHighscore();
+    }
+}
+
+submitBtn.onclick = saveHighscore;
+
+startBtn.onclick = beginQuiz;
+
+choisesEl.onclick = answeringQuestion;
+
+initialsEl.onkeyup = enterScore;
