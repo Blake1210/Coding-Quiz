@@ -21,4 +21,4 @@ function clearHighscores() {
 
 document.getElementById('clear').onclick = clearHighscores;
 
-showHighscores
+showHighscores();
