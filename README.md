@@ -1,1 +1,3 @@
-# week-4-challenge
+In this challenge I created a quiz about Javascript that has a timer, pulls questions from other JS files, and will give you a score based on how quickly you finished the test and how many questions you got right.
+
+At the end of the quiz, you will be prompted to save your initials with this score that will be saved in a highscore html. This page can be viewed at any time and you can clear that data if you want to. 

@@ -6,26 +6,30 @@ var timerId;
 // variables to reference DOM elements
 var questionsEl = document.getElementById('questions');
 var timerEl = document.getElementById('time');
-var choisesEl = document.getElementById('choices');
+var choicesEl = document.getElementById('choices');
 var submitBtn = document.getElementById('submit');
 var startBtn = document.getElementById('start');
 var initialsEl = document.getElementById('initials');
 var feedBackEl = document.getElementById('feedback');
 
 function beginQuiz() {
-    
+    //removes start screen
     var startEl = document.getElementById('start-screen');
     startEl.setAttribute('class', 'hide');
 
+    //shows question section
     questionsEl.removeAttribute('class');
 
+    //Start timer
     timerId = setInterval(timer, 1000);
 
+    //shows starting time
     timerEl.textContent = time;
 
     nextQuestion();
 }
 
+//will pull next question fron question.js
 function nextQuestion() {
     var currentQuestion = questions[currentQuestionIndex];
     
@@ -46,15 +50,17 @@ function nextQuestion() {
     }
 }
 
+//reactions to when a button is clicked for an answer
 function answeringQuestion(event) {
     var buttonEl = event.target
 
-    if (!buttonEl.matches('choice')) {
+    if (!buttonEl.matches('.choice')) {
         return;
     }
 
     if (buttonEl.value === questions[currentQuestionIndex].answer) {
         feedBackEl.textContent = 'Correct!';
+
     }
 
     else {
@@ -78,12 +84,13 @@ function answeringQuestion(event) {
     currentQuestionIndex++;
 
     if (time <= 0 || currentQuestionIndex === questions.length) {
-        quizEnd();
+        endQuiz();
     } else {
-        getQuestion();
+        nextQuestion();
     }
 }
 
+//ends the quiz and takes you to the score screen
 function endQuiz() {
     clearInterval(timerId);
 
@@ -102,7 +109,7 @@ function timer() {
     timerEl.textContent = time;
 
     if (time <= 0) {
-        quizEnd();
+        endQuiz();
     }
 }
 
@@ -121,7 +128,7 @@ function saveHighscore() {
         highscores.push(newHighscore);
         window.localStorage.setItem('highscores', JSON.stringify(highscores));
 
-        window.location.href = 'highscoures.html';
+        window.location.href = 'highscores.html';
     }
 }
 
@@ -135,6 +142,6 @@ submitBtn.onclick = saveHighscore;
 
 startBtn.onclick = beginQuiz;
 
-choisesEl.onclick = answeringQuestion;
+choicesEl.onclick = answeringQuestion;
 
 initialsEl.onkeyup = enterScore;

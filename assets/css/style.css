@@ -30,7 +30,10 @@ button:hover {
 }
 
 .choices button {
-    display: block;
+    display: grid;
+    background-color: blue;
+    border-radius: 40px;
+
 }
 
 input[type="text"] {
